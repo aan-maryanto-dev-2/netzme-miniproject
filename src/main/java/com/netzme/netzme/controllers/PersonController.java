@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonController {
 
     private final PersonService personService;
+    private final String url = "https://randomuser.me/api/";
 
     public PersonController(PersonService personService) {
         this.personService = personService;
@@ -21,6 +22,7 @@ public class PersonController {
     public ResponseEntity<PersonResponse> getPerson() {
 
         PersonResponse pr = new PersonResponse();
+        personService.getPerson(url);
 
         return ResponseEntity.ok(pr);
     }
