@@ -1,23 +1,11 @@
 package com.netzme.netzme.services;
 
-import com.netzme.netzme.dtos.responses.PersonResponse;
-import okhttp3.OkHttpClient;
-import org.springframework.stereotype.Service;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.netzme.netzme.dtos.responses.ApiResponse;
+import retrofit2.Call;
+import retrofit2.http.GET;
 
-@Service
-public class PersonService {
+public interface PersonService {
 
-    public PersonResponse getPerson(String url) {
-        OkHttpClient.Builder client = new OkHttpClient.Builder();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client.build())
-                .build();
-
-        retrofit.create(null);
-        return null;
-    }
+    @GET("/")
+    public Call<ApiResponse> getPerson();
 }
