@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonController {
 
     private final PersonServiceImp personServiceImp;
-    private final String url = "https://randomuser.me/api";
+    private final String url = "https://randomuser.me/api/";
 
     @GetMapping
     public ResponseEntity<PersonResponse> getPerson() {
