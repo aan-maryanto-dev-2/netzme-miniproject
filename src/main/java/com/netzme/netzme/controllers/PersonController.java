@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonController {
 
     private final PersonServiceImp personServiceImp;
-    private final String url = "https://randomuser.me/api/";
+    private final String url = "https://randomuser.me/";
 
     @GetMapping
     public ResponseEntity<PersonResponse> getPerson() {
 
-        PersonResponse pr = new PersonResponse();
-        personServiceImp.getPerson(url);
+        PersonResponse pr = personServiceImp.getPerson(url);
 
         return ResponseEntity.ok(pr);
     }

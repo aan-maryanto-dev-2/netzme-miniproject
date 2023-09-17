@@ -19,27 +19,36 @@ public class PersonServiceImp {
 
     public PersonResponse getPerson(String url) {
         PersonResponse response = new PersonResponse();
+        System.out.println(response);
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         client.addInterceptor(interceptor);
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(client.build())
                 .build();
 
         PersonService personService = retrofit.create(PersonService.class);
         Call<ApiResponse> callSync = personService.getPerson();
 
-        try{
+        try {
             Response<ApiResponse> resp = callSync.execute();
             ApiResponse apiResponse = resp.body();
-            System.out.println("ApiResponse : "+apiResponse);
+            assert apiResponse != null;
+            var gender = apiResponse.getResults().get(0).getGender();
+            var title = apiResponse.getResults().get(0).getName().getTitle();
+            var firstName = apiResponse.getResults().get(0).getName().getFirst();
+            var lastName = apiResponse.getResults().get(0).getName().getLast();
+            var street = apiResponse.getResults().get(0).getLocation().getStreet();
+            var city = apiResponse.getResults().get(0).getLocation().getCity();
+            var picture = apiResponse.getResults().get(0).getPicture().getLarge();
+            response.setGender(gender);
+            response.setFullname(title + " " + firstName + " " + lastName);
+            response.setAddress(street + " " + city);
+            response.setPicture(picture);
             return response;
         } catch (Exception e) {
             throw new RuntimeException(e);

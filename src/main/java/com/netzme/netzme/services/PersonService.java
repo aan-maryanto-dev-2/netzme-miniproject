@@ -5,7 +5,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface PersonService {
-
-    @GET("/")
-    public Call<ApiResponse> getPerson();
+    @GET("api")
+    Call<ApiResponse> getPerson();
 }
